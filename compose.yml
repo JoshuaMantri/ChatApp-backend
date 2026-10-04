@@ -1,0 +1,17 @@
+services:
+  chat-api:
+    build: .
+    ports:
+      - "${API_PORT}:8000"
+    volumes:
+      - type: bind
+        source: /Users/joshuamantri/Development/ChatApp/backend/src
+        target: /usr/local/app/src
+  db:
+    image: mariadb
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
+    ports:
+    - "3306:3306"
+
