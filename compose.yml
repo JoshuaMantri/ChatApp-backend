@@ -7,6 +7,10 @@ services:
       - type: bind
         source: /Users/joshuamantri/Development/ChatApp/backend/src
         target: /usr/local/app/src
+    env_file:
+      - .env
+    depends_on:
+      - db
   db:
     image: mariadb
     restart: always
