@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 import sqlalchemy as sa
 import sqlalchemy.orm as sa_orm
@@ -8,6 +9,7 @@ import os
 from database.schema import create_tables
 
 from services.Auth.store import AuthStore
+from services.Auth.router import auth_router
 
 from datetime import timedelta
 
@@ -20,6 +22,20 @@ engine = sa.create_engine(
 create_tables(engine=engine)
 
 app = FastAPI()
+
+origins = [
+    "http://localhost:3000"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+app.include_router(auth_router)
 
 Session = sa_orm.sessionmaker(engine)
 

@@ -19,7 +19,7 @@ class UserSession(Base):
 
     session_token: sa_orm.Mapped[str] = sa_orm.mapped_column(sa.String(50), primary_key=True)
     user_id = sa_orm.mapped_column(sa.ForeignKey("user_account.user_id"))
-    session_expiry : sa_orm.Mapped[datetime] = sa_orm.mapped_column(sa.TIMESTAMP)
+    session_expiry : sa_orm.Mapped[datetime] = sa_orm.mapped_column(sa.DATETIME(timezone=True))
 
     user: sa_orm.Mapped[User] = sa_orm.relationship("User", back_populates="session")
 

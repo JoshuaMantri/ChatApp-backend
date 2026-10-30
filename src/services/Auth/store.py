@@ -46,6 +46,7 @@ class AuthStore():
             password_hash=password_hash
         )
         self.sa_session.add(user)
+        self.sa_session.flush()
         return user
 
     def create_access_token(self, *, session_token: str) -> str:
