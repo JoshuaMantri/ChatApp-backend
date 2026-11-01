@@ -20,7 +20,7 @@ def login_user(response: fastapi.Response, loginDetails: LoginPost, store: typin
     user = store.login(email=loginDetails.email, password=loginDetails.password)
     session_token = store.create_session_token(user_id=user.user_id)
     expires = session_token.session_expiry.replace(tzinfo=datetime.timezone.utc)
-    response.set_cookie(key="session_token", value=session_token.session_token, expires=expires, httponly=False, samesite="strict", secure=False)
+    response.set_cookie(key="session_token", value=session_token.session_token, expires=expires, httponly=False, samesite="lax", secure=False)
     store.sa_session.commit()
     return UserModel (
         user_id=user.user_id,
@@ -30,8 +30,8 @@ def login_user(response: fastapi.Response, loginDetails: LoginPost, store: typin
 
 @auth_router.get("/access_token")
 def get_access_token(request: fastapi.Request, store: typing.Annotated[AuthStore, fastapi.Depends(get_auth_store)], session_token: typing.Annotated[str, fastapi.Depends(session_token_scheme)]) -> AccessTokenModel:
+    print("session_token test real", flush=True)
     access_token = store.create_access_token(session_token=session_token)
-    store.sa_session.commit()
     return AccessTokenModel(
         token=access_token,
         expiry= datetime.datetime.now() + store.jwt_validity_time

@@ -10,6 +10,7 @@ from database.schema import create_tables
 
 from services.Auth.store import AuthStore
 from services.Auth.router import auth_router
+from services.Message.router import message_router
 
 from datetime import timedelta
 
@@ -24,7 +25,8 @@ create_tables(engine=engine)
 app = FastAPI()
 
 origins = [
-    "http://localhost:3000"
+    "http://localhost:3000",
+    "*",
 ]
 
 app.add_middleware(
@@ -36,6 +38,7 @@ app.add_middleware(
 )
 
 app.include_router(auth_router)
+app.include_router(message_router)
 
 Session = sa_orm.sessionmaker(engine)
 

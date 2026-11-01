@@ -14,8 +14,7 @@ services:
   db:
     image: mariadb
     restart: always
-    environment:
-      env_file: "/Users/joshuamantri/Development/ChatApp/backend/.env"
+    env_file: "/Users/joshuamantri/Development/ChatApp/backend/.env"
     ports:
     - "3306:3306"
 

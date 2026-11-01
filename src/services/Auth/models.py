@@ -20,3 +20,8 @@ class CreateAccountPost(pydantic.BaseModel):
 class AccessTokenModel(pydantic.BaseModel):
     expiry: datetime
     token: str
+
+
+class UserClaims(pydantic.BaseModel):
+    user_id: int
+    username: str

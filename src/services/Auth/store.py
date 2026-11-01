@@ -62,7 +62,9 @@ class AuthStore():
 
         access_token = jwt.encode({
                 "iat" : datetime.now(), 
-                "exp" : datetime.now() + self.jwt_validity_time
+                "exp" : datetime.now() + self.jwt_validity_time,
+                "user_id": session.user_id,
+                "username": session.user.username,
             }, 
             private_key, algorithm="RS256")
 

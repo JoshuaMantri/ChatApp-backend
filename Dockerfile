@@ -1,6 +1,8 @@
 FROM astral/uv:python3.12-bookworm-slim
 WORKDIR /usr/local/app
 
+ENV PYTHONUNBUFFERED=1
+
 COPY pyproject.toml uv.lock ./
 RUN uv sync
 
